@@ -1,0 +1,7 @@
+build
+dist
+*.pyc
+*.png
+*.json
+
+private.py
