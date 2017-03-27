@@ -16,7 +16,7 @@ builder = pyocr.builders.WordBoxBuilder(tesseract_layout=6)
 
 def getPositionFromText(string,
                         up=0, down=899, left=700, right=1399,
-                        nameOutputImage="output.png",
+                        nameOutputImage="output.png", key=None,
                         flagDebug=False, flagSavePicture=False, flagMouseMove=False, flagGCV=True):
 
     nameImage = "screenshot.png"
@@ -33,7 +33,7 @@ def getPositionFromText(string,
     cv2.imwrite(nameImage, image)
 
     if flagGCV:
-        result = customGCV.searchStrings(string[0], nameImage)
+        result = customGCV.searchStrings(string[0], nameImage, flagDebug=False, key=key)
     else:
         tool = tools[1]
         res = tool.image_to_string(Image.open(nameImage),
@@ -80,12 +80,14 @@ def __checkOCR(tools):
 
 
 if __name__ == '__main__':
+    from private import KEY
+
     string = [u'しゅうかく']
     up = 300
     down = 700
     left = 800
     right = 1399
 
-    result = getPositionFromText(string=string, up=up, down=down, left=left, right=right, flagDebug=True, flagSavePicture=True, flagMouseMove=True)
+    result = getPositionFromText(string=string, up=up, down=down, left=left, right=right, flagDebug=True, flagSavePicture=True, flagMouseMove=True, key=KEY)
     # result = getPositionFromText(string=string, flagDebug=True, flagSavePicture=True)
 

@@ -5,10 +5,9 @@ import base64
 import json
 from requests import Request, Session
 import numpy as np
-from private import KEY
  
  
-def recognize_captcha(str_image_path):
+def recognize_captcha(str_image_path, KEY=None):
     # bin_captcha = open(str_image_path, 'rb').read()
     # print(bin_captcha)
     # str_encode_file = base64.b64encode(bin_captcha)
@@ -70,8 +69,8 @@ def formatJson(strings):
     return weather_format_json
 
 
-def searchStrings(strings, imageFile, flagDebug=False):
-    recognize_captcha(imageFile)
+def searchStrings(strings, imageFile, flagDebug=False, key=None):
+    recognize_captcha(imageFile, KEY=key)
     # result = formatJson(strings)
     # print(result)
 
@@ -123,7 +122,8 @@ def searchStrings(strings, imageFile, flagDebug=False):
 
  
 if __name__ == '__main__':
+    from private import KEY
     strings = u"しゅうかく"
     imageFile = "screenshot.png"
-    result = searchStrings(strings, imageFile, flagDebug=True)
+    result = searchStrings(strings, imageFile, flagDebug=True, key=KEY)
     # print(result)
