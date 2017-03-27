@@ -92,38 +92,39 @@ def searchStrings(strings, imageFile, flagDebug=False, key=None):
     textAnnotations = responses['textAnnotations']
     # print("len(textAnnotation) : ", len(textAnnotations))
     # print("textAnnotations[0].keys : ", textAnnotations[0].keys())
-    for i in range(1, len(textAnnotations)):
-        # print("textAnnotations[" + str(i) + "] : ", textAnnotations[i])
-        # print("textAnnotations[" + str(i) + "].keys : ", textAnnotations[i].keys())
-        description = textAnnotations[i]['description']
-        if flagDebug:
-            print("description : ", i, description)
+    for string in strings:
+        for i in range(1, len(textAnnotations)):
+            # print("textAnnotations[" + str(i) + "] : ", textAnnotations[i])
+            # print("textAnnotations[" + str(i) + "].keys : ", textAnnotations[i].keys())
+            description = textAnnotations[i]['description']
+            if flagDebug:
+                print("description : ", i, description)
 
-        boundingPoly = textAnnotations[i]['boundingPoly']
-        # print("boundingPoly.keys : ", i, boundingPoly.keys())
-        vertices = boundingPoly['vertices']
-        # print("vertices : ", i, vertices)
-        upperRight = vertices[0]
-        lowerRight = vertices[1]
-        upperLeft = vertices[2]
-        lowerLeft = vertices[3]
-        # print(upperRight, lowerRight, upperLeft, lowerLeft)
+            boundingPoly = textAnnotations[i]['boundingPoly']
+            # print("boundingPoly.keys : ", i, boundingPoly.keys())
+            vertices = boundingPoly['vertices']
+            # print("vertices : ", i, vertices)
+            upperRight = vertices[0]
+            lowerRight = vertices[1]
+            upperLeft = vertices[2]
+            lowerLeft = vertices[3]
+            # print(upperRight, lowerRight, upperLeft, lowerLeft)
 
-        if strings in description:
-            # result.append(vertices)
-            up = vertices[0]['y']
-            down = vertices[2]['y']
-            left = vertices[0]['x']
-            right = vertices[2]['x']
-            result.append([[left, up], [right, down]])
-            break
+            if string in description:
+                # result.append(vertices)
+                up = vertices[0]['y']
+                down = vertices[2]['y']
+                left = vertices[0]['x']
+                right = vertices[2]['x']
+                result.append([[left, up], [right, down]])
+                break
     result = np.asarray(result)
     return result
 
  
 if __name__ == '__main__':
     from private import KEY
-    strings = u"しゅうかく"
+    strings = [u"しゅうかく"]
     imageFile = "screenshot.png"
     result = searchStrings(strings, imageFile, flagDebug=True, key=KEY)
     # print(result)
